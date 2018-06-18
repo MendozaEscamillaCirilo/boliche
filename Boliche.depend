@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1528601714 source:c:\users\lilo\desktop\boliche\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<GL/glut.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<iostream>
+	<math.h>
+	<ImageLoader.h>
+
+1527577737 c:\users\lilo\desktop\boliche\include\imageloader.h
+
+1528089327 source:c:\users\lilo\desktop\boliche\src\imageloader.cpp
+	<assert.h>
+	<fstream>
+	"imageloader.h"
+

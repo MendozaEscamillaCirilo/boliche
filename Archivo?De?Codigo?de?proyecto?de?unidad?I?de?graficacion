@@ -1,0 +1,520 @@
+#include<iostream>
+#include "conio.h"
+#include "punto.h"
+#include<graphics.h>
+#include<list>
+
+#define SPACE 32  //PARA DISPARAR CON LA BARRA ESPACIADORA
+#define RIGTH 77
+#define LEFT 75
+using namespace std;
+////////////////EN ESTA PARTE IRÁN LAS MATRICES CON LAS FIGURAS////////////////////////7
+int fantasma0[11][11]= {
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,3,3,3,0,0,0,0,0},
+{0,0,0,3,3,3,0,0,0,0,0},
+{0,0,0,3,3,3,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma1[11][11]= {
+{0,0,1,0,0,0,0,0,1,0,0},
+{0,0,0,1,0,0,0,1,0,0,0},
+{0,0,1,1,1,1,1,1,1,0,0},
+{0,1,1,0,1,1,1,0,1,1,0},
+{1,1,1,1,1,1,1,1,1,1,1},
+{1,0,1,1,1,1,1,1,1,0,1},
+{1,0,1,0,0,0,0,0,1,0,1},
+{0,0,0,1,1,0,1,1,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma1i[11][11]= {
+{0,0,1,0,0,0,0,0,1,0,0},
+{1,0,0,1,0,0,0,1,0,0,1},
+{1,0,1,1,1,1,1,1,1,0,1},
+{1,1,1,0,1,1,1,0,1,1,1},
+{1,1,1,1,1,1,1,1,1,1,1},
+{0,1,1,1,1,1,1,1,1,1,0},
+{0,0,1,0,0,0,0,0,1,0,0},
+{0,1,0,0,0,0,0,0,0,1,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma2[11][11]= {
+{0,0,0,0,1,1,1,0,0,0,0},
+{0,0,1,1,1,1,1,1,1,0,0},
+{0,1,1,1,1,1,1,1,1,1,0},
+{1,1,1,1,1,1,1,1,1,1,1},
+{1,1,1,0,1,1,1,0,1,1,1},
+{1,1,1,1,1,1,1,1,1,1,1},
+{0,0,0,1,1,0,1,1,0,0,0},
+{0,0,1,1,0,1,0,1,1,0,0},
+{0,0,0,1,1,0,1,1,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma2i[11][11]= {
+{0,0,0,0,1,1,1,0,0,0,0},
+{0,0,1,1,1,1,1,1,1,0,0},
+{0,1,1,1,1,1,1,1,1,1,0},
+{1,1,1,1,1,1,1,1,1,1,1},
+{1,1,1,0,1,1,1,0,1,1,1},
+{1,1,1,1,1,1,1,1,1,1,1},
+{0,0,0,1,1,0,1,1,0,0,0},
+{0,0,1,1,0,1,0,1,1,0,0},
+{1,1,0,0,0,0,0,0,0,1,1},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma3[11][11]= {
+{0,0,0,1,1,0,0,0,0,0,0},
+{0,0,1,1,1,1,0,0,0,0,0},
+{0,1,1,1,1,1,1,0,0,0,0},
+{1,1,0,1,1,0,1,1,0,0,0},
+{1,1,1,1,1,1,1,1,0,0,0},
+{0,1,0,1,1,0,1,0,0,0,0},
+{1,0,0,0,0,0,0,1,0,0,0},
+{0,1,0,0,0,0,1,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int fantasma3i[11][11]= {
+{0,0,1,0,0,0,0,1,0,0,0},
+{0,0,0,1,0,0,1,0,0,0,0},
+{0,0,0,0,1,1,0,0,0,0,0},
+{0,0,1,1,1,1,1,1,0,0,0},
+{0,1,1,0,1,1,0,1,1,0,0},
+{1,1,1,1,1,1,1,1,1,1,0},
+{1,0,1,1,1,1,1,1,0,1,0},
+{1,0,1,0,0,0,0,1,0,1,0},
+{0,0,0,1,0,0,1,0,0,0,0},
+{0,0,1,0,0,0,0,1,0,0,0},
+{0,0,0,0,0,0,0,0,0,0,0}};
+int naveroja[7][16]= {
+{0,0,0,0,0,3,3,3,3,3,3,0,0,0,0,0},
+{0,0,0,3,3,3,3,3,3,3,3,1,1,0,0,0},
+{0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+{0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+{0,0,1,1,1,0,0,1,1,0,0,1,1,1,0,0},
+{0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0}};
+int navemat[7][16]= {
+{0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
+{0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
+{0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0}};
+int disparomat[5][3]={
+{0,1,0},
+{0,1,0},
+{0,1,0},
+{0,1,0},
+{0,0,0}};
+int disparo1[5][3]={
+{0,1,0},
+{0,1,0},
+{1,1,1},
+{0,1,0},
+{0,1,0}};
+int disparo2[5][3]={
+{1,0,0},
+{0,1,0},
+{1,0,0},
+{0,1,0},
+{1,0,0}};
+////////////////////////////////////////////////////////
+
+//-----------------CLASE PARA LA NAVECITA ROJA QUE APARECE EN LA PARTE SUPERIOR--------\\*/
+class nave{
+	int x,y;
+	public:
+		nave():x(40),y(35){};
+		void pintar(){
+				for(int i=0;i<7;i++){
+   					for(int j=0;j<16;j++){
+   						if(naveroja[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,RED);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void borrar(){
+			for(int i=0;i<7;i++){
+   					for(int j=0;j<16;j++){
+   						if(naveroja[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+				
+		}
+		void mover(){
+			borrar();
+			if(x<300) x+=3;
+			else{
+				x=35;
+				Sleep(200);
+			}
+			
+			pintar();
+		}
+		int getx(){return x;}
+		int gety(){return y;}
+};
+
+//----C R--------
+class navemia{
+	int x,y;
+	public:
+		navemia():x(176),y(420){};
+		void pintar(){
+			for(int i=0;i<7;i++){
+   					for(int j=0;j<16;j++){
+   						if(navemat[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,GREEN);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void borrar(){
+			for(int i=0;i<7;i++){
+   					for(int j=0;j<16;j++){
+   						if(navemat[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void mover(){
+				if(kbhit()){
+					borrar();
+					char tecla = getch();
+					switch(tecla){
+						case RIGTH:
+							if(x < 326)
+							x+=3;
+							break;
+						case LEFT:
+							if(x > 33)
+							x-=3;
+							break;
+					}
+					pintar();
+				}
+		}
+		int getx(){return x;}
+		int gety(){return y;}
+};
+///--------NOS SIRVE PARA LAS BALAS QUE DISPARAMOS-----// 
+class disparomio{
+	int x,y;
+	public:
+		disparomio(int xx,int yy):x(xx),y(yy){};
+		void pintar(){
+			for(int i=0;i<5;i++){
+   					for(int j=0;j<3;j++){
+   						if(disparomat[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,WHITE);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void borrar(){
+			for(int i=0;i<5;i++){
+   					for(int j=0;j<3;j++){
+   						if(disparomat[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void mover(){
+			borrar();
+			y--;
+			pintar();
+		}
+		bool fuera(){
+			if(y == 33)
+				return true;
+			else
+				return false;
+		}
+		int getx(){return x;}
+		int gety(){return y;}
+};
+///----CLASE PARA DISPARO DE FANTASMAS--///
+class disparofan{
+	int x,y;
+	public:
+		disparofan(int xx,int yy):x(xx),y(yy){};
+		void pintar(){
+			for(int i=0;i<5;i++){
+   					for(int j=0;j<3;j++){
+   						if(disparo1[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,WHITE);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void borrar(){
+			for(int i=0;i<5;i++){
+   					for(int j=0;j<3;j++){
+   						if(disparo1[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+		}
+		void mover(){
+			borrar();
+			y++;
+			pintar();
+		}
+		bool fuera(){
+			if(y == 450)
+				return true;
+			else
+				return false;
+		}
+		int getx(){return x;}
+		int gety(){return y;}
+};
+
+///-----CLASE PARA LOS FANTASMAS---///
+class fantasmas{
+	int x,y,nf,nm=0;
+	bool id=false;
+	public:
+		fantasmas(int _x, int _y,int _nf):x(_x),y(_y),nf(_nf){};
+		void pintar(){
+			switch(nf){
+				case 1:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma1[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,WHITE);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+				case 2:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma2[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,WHITE);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+				case 3:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma3[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,WHITE);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+			}
+				
+		}
+		void borrar(){
+			switch(nf){
+				case 1:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma1[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+				case 2:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma2[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+				case 3:
+					for(int i=0;i<11;i++){
+   					for(int j=0;j<11;j++){
+   						if(fantasma3[i][j] != 0){
+   							cuadro(x+(j*3),y+(i*3),true,BLACK);
+			   			}else{
+			   				//cuadro(y+(j*3),x+(i*3),false,BLACK);
+			   			}
+					}
+				}
+					break;
+			}
+				
+		}
+		void mover(){
+			borrar();
+			if(nm==0) id = false;
+			if(nm==9) id = true;
+			if(!id){x+=3; nm++;
+			}else{
+				x-=3;
+				nm--;
+			}
+			
+			pintar();
+		}
+		void vuelvecero(){
+			x=0;
+			y=0;
+		}
+		int getx(){return x;}
+		int gety(){return y;}
+		
+		
+};
+
+///-----NOS PINTA EL CONTORNO DE LA FIGURA TOTAL DE COLOR AMARILLO---*/
+void pintar_limites(){
+	for(int i=29;i<365;i+=2){
+		cuadro(i,29,true,YELLOW);
+		cuadro(i,462,true,YELLOW);
+	}
+	for(int i=29;i<462;i+=2){
+		cuadro(29,i,true,YELLOW);
+		cuadro(365,i,true,YELLOW);
+	}
+}
+
+
+
+int main(){
+   int gd = DETECT, gm;
+   initgraph(&gd, &gm, "C:\\TC\\BGI");
+       
+   	pintar_limites();
+   	nave n1;
+   	navemia n2;
+	n1.pintar();
+	n2.pintar();
+	
+	list<disparomio*> a;
+	list<disparomio*>::iterator dis;
+	
+	list<fantasmas*> f;
+	list<fantasmas*>::iterator fan;
+	
+	list<disparofan*> df;
+	list<disparofan*>::iterator idf;
+	
+	f.push_back(new fantasmas(50,200,1));
+	f.push_back(new fantasmas(120,200,2));
+	f.push_back(new fantasmas(200,200,3));
+	f.push_back(new fantasmas(280,200,1));
+	
+	bool game_over = false, pegonave = false, pegof1 = false;
+	while(!game_over){
+		
+		if(kbhit()){
+			char tecla = getch();
+			if(tecla == SPACE)
+				a.push_back(new disparomio(n2.getx()+15,n2.gety()-12));
+			/*if(tecla == 'f')
+				f.push_back(new fantasmas(n2.getx(),200,1));
+				if(tecla == 'd')
+				df.push_back(new disparofan(n2.getx(),200));*/
+		}
+			
+		
+		for(dis = a.begin();dis!=a.end();dis++){
+			(*dis)->mover();
+			if((*dis)->fuera()){
+				(*dis)->borrar();
+				delete(*dis);
+				dis = a.erase(dis);
+			}
+		}
+		
+		for(fan = f.begin();fan!=f.end();fan++){
+			(*fan)->mover();
+		}
+		for(fan = f.begin();fan!=f.end();fan++){
+			for(dis = a.begin();dis!=a.end();dis++){
+				if((*fan)->gety()+24 == (*dis)->gety() && ((*fan)->getx() >= (*dis)->getx()-15 && (*fan)->getx() <= (*dis)->getx()+15)){
+					(*dis)->borrar();
+					delete(*dis);
+					dis = a.erase(dis);
+					(*fan)->borrar();
+					delete(*fan);
+					fan = f.erase(fan);
+				}
+			}
+		}
+		
+		
+		for(idf = df.begin();idf!=df.end();idf++){
+			(*idf)->mover();
+			if((*idf)->fuera()){
+				(*idf)->borrar();
+				delete(*idf);
+				idf = df.erase(idf);
+			}
+		}
+		
+		for(dis = a.begin();dis!=a.end();dis++){
+				if((*dis)->gety() == n1.gety() && (*dis)->getx() == n1.getx()){
+					(*dis)->borrar();
+					n1.borrar();
+					delete(*dis);
+					dis = a.erase(dis);
+					pegonave = true;
+				}
+			}
+		
+		if(!pegonave)n1.mover();
+		
+		n2.mover();
+		Sleep(70);
+	}//
+  getch();
+   closegraph();
+	return 0;
+}
+
+
+
+
+
+		
+		
